@@ -1,0 +1,509 @@
+@font-face {
+  font-family: "Playfair Display";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/playfair-display-v40-latin-600.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Playfair Display";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/playfair-display-v40-latin-700.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("assets/fonts/source-sans-3-v19-latin-300.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/source-sans-3-v19-latin-regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/source-sans-3-v19-latin-600.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/source-sans-3-v19-latin-700.woff2") format("woff2");
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Source Sans 3", sans-serif;
+  min-height: 100vh;
+  background: #1a1a2e;
+  background-image:
+    radial-gradient(ellipse at 15% 15%, #16213e 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 85%, #0f3460 0%, transparent 55%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+/* ── Paper / Card ───────────────────────────── */
+.paper {
+  background: #fefcf5;
+  width: 100%;
+  max-width: 860px;
+  border-radius: 4px;
+  padding: 2.75rem 3rem 3rem;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.3),
+    0 8px 16px rgba(0, 0, 0, 0.25),
+    0 20px 48px rgba(0, 0, 0, 0.2),
+    0 40px 80px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.paper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    transparent,
+    transparent 31px,
+    rgba(140, 160, 200, 0.1) 31px,
+    rgba(140, 160, 200, 0.1) 32px
+  );
+  pointer-events: none;
+  border-radius: 4px;
+  z-index: 0;
+}
+
+/* ── Title ─────────────────────────────────── */
+.title {
+  font-family: "Playfair Display", serif;
+  font-size: 50px;
+  font-weight: 700;
+  color: #1a1a2e;
+  text-align: center;
+  margin-bottom: 0.2rem;
+  position: relative;
+  z-index: 1;
+  letter-spacing: 3px;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: #8899aa;
+  text-align: center;
+  margin-bottom: 2.25rem;
+  position: relative;
+  z-index: 1;
+  font-style: italic;
+  letter-spacing: 0.04em;
+}
+
+/* ── Setup ─────────────────────────────────── */
+#setup-view {
+  position: relative;
+  z-index: 1;
+}
+
+.section-label {
+  font-family: "Playfair Display", serif;
+  font-size: 20px;
+  color: #1a1a2e;
+  margin-bottom: 0.4rem;
+}
+
+.setup-hint {
+  font-size: 12px;
+  color: #8899aa;
+  font-style: italic;
+  margin-bottom: 1.25rem;
+}
+
+.opt {
+  font-size: 10px;
+  font-weight: 400;
+  color: #aab;
+  font-style: italic;
+}
+
+.players-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-bottom: 1.75rem;
+}
+
+.field-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #8899aa;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 8px 4px;
+  font-size: 16px;
+  font-family: "Source Sans 3", sans-serif;
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid #c8ccd8;
+  color: #1a1a2e;
+  outline: none;
+  transition: border-color 0.2s;
+}
+input[type="text"]:focus {
+  border-bottom-color: #0f3460;
+}
+input[type="text"]::placeholder {
+  color: #c8ccd8;
+}
+
+.btn {
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 10px 26px;
+  border-radius: 4px;
+  border: 2px solid #1a1a2e;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-primary {
+  background: #1a1a2e;
+  color: #fefcf5;
+}
+.btn-primary:hover {
+  background: #0f3460;
+  border-color: #0f3460;
+}
+
+.error-msg {
+  color: #a32d2d;
+  font-size: 12px;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* ── Game view ─────────────────────────────── */
+#game-view {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Player cards ──────────────────────────── */
+.player-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 14px;
+  margin-bottom: 2rem;
+}
+
+.player-card {
+  background: #f4f1e8;
+  border: 1px solid #ddd8cc;
+  border-radius: 6px;
+  padding: 1rem 1rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  transition: box-shadow 0.2s;
+}
+
+.player-card.is-looser {
+  background: #fff0f0;
+  border-color: #e8a0a0;
+}
+
+.card-name {
+  font-family: "Playfair Display", serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: #1a1a2e;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-score-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-score-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #8899aa;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  white-space: nowrap;
+}
+
+.card-score-input {
+  flex: 1;
+  padding: 5px 6px;
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  border: none;
+  border-bottom: 2px solid #c8ccd8;
+  background: transparent;
+  color: #1a1a2e;
+  outline: none;
+  min-width: 0;
+  -moz-appearance: textfield;
+}
+.card-score-input::-webkit-inner-spin-button,
+.card-score-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+.card-score-input:focus {
+  border-bottom-color: #0f3460;
+}
+
+/* Looser button */
+.btn-looser {
+  width: 100%;
+  padding: 7px 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 3px;
+  border: 1.5px solid #c8ccd8;
+  background: transparent;
+  color: #8899aa;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-looser:hover {
+  border-color: #c0392b;
+  color: #c0392b;
+  background: #fff5f5;
+}
+.btn-looser.active {
+  background: #c0392b;
+  border-color: #c0392b;
+  color: #fff;
+}
+
+/* ── Table section ─────────────────────────── */
+.table-section {
+  margin-bottom: 1.5rem;
+}
+
+.table-section .section-label {
+  margin-bottom: 0.75rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+thead th {
+  background: #1a1a2e;
+  color: #e8e4d8;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 10px 14px;
+  border: 1px solid #0f3460;
+  white-space: nowrap;
+  text-align: center;
+}
+thead th:first-child {
+  text-align: left;
+}
+
+tbody td {
+  border: 1px solid #ddd8cc;
+  padding: 9px 14px;
+  text-align: center;
+  color: #1a1a2e;
+  background: #fefcf5;
+  font-size: 14px;
+}
+
+tbody td.round-label {
+  text-align: left;
+  font-size: 12px;
+  color: #8899aa;
+  background: #f4f1e8;
+  font-style: italic;
+  white-space: nowrap;
+}
+
+tbody td.looser-cell {
+  color: #c0392b;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+/* Sum row */
+tbody tr.sum-row td {
+  background: #1a1a2e;
+  color: #e8e4d8;
+  font-family: "Playfair Display", serif;
+  font-size: 17px;
+  font-weight: 600;
+  border-top: 2px solid #0f3460;
+  border-bottom: 2px solid #0f3460;
+  border-left: 1px solid #0f3460;
+  border-right: 1px solid #0f3460;
+  padding: 11px 14px;
+}
+tbody tr.sum-row td:first-child {
+  text-align: left;
+  font-size: 12px;
+  font-family: "Source Sans 3", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8899bb;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+tbody tr.sum-row td.sum-winner {
+  color: #7ecfa0;
+}
+
+/* ── Bottom bar ────────────────────────────── */
+.bottom-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-add {
+  background: #1a1a2e;
+  color: #fefcf5;
+  border-color: #1a1a2e;
+  font-size: 14px;
+  padding: 9px 22px;
+}
+.btn-add:hover {
+  background: #0f3460;
+  border-color: #0f3460;
+}
+
+.reset-btn {
+  font-size: 12px;
+  color: #8899aa;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  font-style: italic;
+  font-family: "Source Sans 3", sans-serif;
+}
+.reset-btn:hover {
+  color: #1a1a2e;
+}
+
+.hidden {
+  display: none;
+}
+
+/* ── Mobile ─────────────────────────────────── */
+@media (max-width: 600px) {
+  body {
+    padding: 1rem 0.5rem 2rem;
+  }
+
+  .paper {
+    padding: 1.75rem 1.1rem 2rem;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+  .subtitle {
+    font-size: 12px;
+    margin-bottom: 1.5rem;
+  }
+
+  .players-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .player-cards {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .player-card {
+    padding: 0.8rem 0.75rem 0.7rem;
+  }
+  .card-name {
+    font-size: 15px;
+  }
+  .card-score-input {
+    font-size: 16px;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  table {
+    min-width: 340px;
+    font-size: 13px;
+  }
+  thead th {
+    padding: 8px 10px;
+  }
+  tbody td {
+    padding: 8px 10px;
+  }
+
+  .bottom-bar {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+}
+
+/* ── Add round bar ──────────────────────────── */
+.add-round-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  margin-bottom: 1.75rem;
+}
+
+.add-round-bar .error-msg {
+  margin-top: 0;
+}
