@@ -6,8 +6,6 @@ A scorecard web app for the card game **Sedmica**, built as a Progressive Web Ap
 
 ---
 
-#todo modal umjesto popupa
-
 ## Features
 
 - **2–4 players** — optional players can be left blank
