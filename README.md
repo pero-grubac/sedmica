@@ -6,6 +6,7 @@ A scorecard web app for the card game **Sedmica**, built as a Progressive Web Ap
 
 ---
 
+#todo modal umjesto popupa
 
 ## Features
 

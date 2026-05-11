@@ -222,7 +222,11 @@ function deleteLastRound() {
    RESET
 ══════════════════════════════════════════ */
 function resetGame() {
-  if (!confirm("Resetovati cijelu igru?")) return;
+  document.getElementById("reset-modal").classList.remove("hidden");
+}
+
+function confirmReset() {
+  document.getElementById("reset-modal").classList.add("hidden");
   document.getElementById("game-view").classList.add("hidden");
   document.getElementById("setup-view").classList.remove("hidden");
   players = [];
@@ -231,4 +235,8 @@ function resetGame() {
   [1, 2, 3, 4].forEach((i) => {
     document.getElementById(`p${i}`).value = "";
   });
+}
+
+function cancelReset() {
+  document.getElementById("reset-modal").classList.add("hidden");
 }
