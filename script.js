@@ -74,12 +74,25 @@ function renderPlayerCards() {
    LOOSER TOGGLE
 ══════════════════════════════════════════ */
 function toggleLooser(pi) {
+  // Save all current input values before re-render
+  const savedVals = players.map((_, i) => {
+    const el = document.getElementById(`input-${i}`);
+    return el ? el.value : "0";
+  });
+
   if (loosers.has(pi)) {
     loosers.delete(pi);
   } else {
     loosers.add(pi);
   }
+
   renderPlayerCards();
+
+  // Restore input values after re-render
+  players.forEach((_, i) => {
+    const el = document.getElementById(`input-${i}`);
+    if (el) el.value = savedVals[i];
+  });
 }
 
 /* ══════════════════════════════════════════
@@ -94,13 +107,12 @@ function addRound() {
     return parseInt(el ? el.value : "0") || 0;
   });
 
-  // Validation: non-looser scores must sum to exactly 8
+  // Validation: non-looser scores must sum to exactly 8 or 9
   const nonLooserVals = vals.filter((_, pi) => !loosers.has(pi));
-
   const total = nonLooserVals.reduce((a, b) => a + b, 0);
 
-  if (total !== 8) {
-    errEl.textContent = `Greška: bodovi moraju biti tačno 8 (trenutno: ${total}).`;
+  if (total !== 8 && total !== 9) {
+    errEl.textContent = `Greška: bodovi moraju biti 8 ili 9 (trenutno: ${total}).`;
     return;
   }
   errEl.textContent = "";

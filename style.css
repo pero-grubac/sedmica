@@ -460,7 +460,7 @@ tbody tr.sum-row td.sum-winner {
   }
 
   .player-cards {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 10px;
   }
   .player-card {

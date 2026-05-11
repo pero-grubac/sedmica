@@ -1,4 +1,4 @@
-const CACHE_NAME = "sedmica-v1";
+const CACHE_NAME = "sedmica-v2";
 
 const FILES_TO_CACHE = [
   "./",
@@ -16,7 +16,15 @@ const FILES_TO_CACHE = [
   "./assets/fonts/source-sans-3-v19-latin-700.woff2",
 ];
 
+const isLocal =
+  self.location.hostname === "localhost" ||
+  self.location.hostname === "127.0.0.1";
+
 self.addEventListener("install", (event) => {
+  if (isLocal) {
+    self.skipWaiting();
+    return;
+  }
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(FILES_TO_CACHE)),
   );
@@ -24,6 +32,10 @@ self.addEventListener("install", (event) => {
 });
 
 self.addEventListener("activate", (event) => {
+  if (isLocal) {
+    self.clients.claim();
+    return;
+  }
   event.waitUntil(
     caches
       .keys()
@@ -37,6 +49,9 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
+  // On localhost — always go to network, never cache
+  if (isLocal) return;
+
   event.respondWith(
     caches.match(event.request).then((cached) => {
       return (
