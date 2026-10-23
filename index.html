@@ -16,6 +16,7 @@
     <div class="paper">
 
         <h1 class="title">♠ Sedmica</h1>
+        <p class="subtitle" id="subtitle">scorecard — 8 ili 9 bodova po rundi</p>
 
         <!-- ═══════ SETUP ═══════ -->
         <div id="setup-view">
@@ -39,25 +40,60 @@
                     <input type="text" id="p4" placeholder="Ime..." maxlength="16" />
                 </div>
             </div>
+            <div class="limit-field">
+                <label class="field-label" for="limit">Igra do</label>
+                <input type="number" id="limit" class="limit-input" value="51" min="11" step="1" inputmode="numeric" />
+                <span class="setup-hint limit-hint">bodova — ko prvi dođe do granice, gubi</span>
+            </div>
             <button class="btn btn-primary" onclick="startGame()">Počni igru →</button>
             <p id="setup-error" class="error-msg"></p>
+
+            <!-- Past games and per-player stats -->
+            <section id="history-section" class="history hidden" aria-labelledby="history-title">
+                <p class="section-label" id="history-title">Istorija</p>
+                <div class="table-wrap">
+                    <table class="stats-table">
+                        <thead>
+                            <tr>
+                                <th>Igrač</th>
+                                <th>Igre</th>
+                                <th>Porazi</th>
+                                <th>Prosjek</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stats-tbody"></tbody>
+                    </table>
+                </div>
+                <ul id="history-list" class="history-list"></ul>
+                <button class="reset-btn" onclick="askClearHistory()">🗑 Obriši istoriju</button>
+            </section>
         </div>
 
         <!-- ═══════ GAME ═══════ -->
         <div id="game-view" class="hidden">
+
+            <!-- Game over: round entry stays locked until undo or a new game -->
+            <div id="game-over" class="game-over hidden" role="status" aria-live="polite">
+                <p class="game-over-title">Kraj igre</p>
+                <p id="game-over-text" class="game-over-text"></p>
+                <button class="btn btn-primary" onclick="resetGame()">↺ Nova igra</button>
+            </div>
 
             <!-- Player cards -->
             <div class="player-cards" id="player-cards"></div>
 
             <!-- Add round button + validation error — between cards and table -->
             <div class="add-round-bar">
-                <button class="btn btn-add" onclick="addRound()">+ Dodaj rundu</button>
+                <div class="add-round-row">
+                    <span id="round-sum" class="round-sum" aria-live="polite"></span>
+                    <button class="btn btn-add" id="add-btn" onclick="addRound()">+ Dodaj rundu</button>
+                </div>
                 <p id="round-error" class="error-msg"></p>
             </div>
 
             <!-- Score table -->
             <div class="table-section">
-                <p class="section-label">Tabela bodova</p>
+                <p class="section-label">Tabela bodova <span id="limit-label" class="limit-label"></span></p>
                 <div class="table-wrap">
                     <table id="score-table">
                         <thead id="score-thead"></thead>
@@ -67,6 +103,7 @@
             </div>
 
             <div class="bottom-bar">
+                <button class="reset-btn" id="undo-btn" onclick="deleteLastRound()">↶ Poništi zadnju rundu</button>
                 <button class="reset-btn" onclick="resetGame()">↺ Nova igra</button>
             </div>
 
@@ -78,10 +115,22 @@
     <div id="reset-modal" class="modal-overlay hidden" onclick="cancelReset()">
         <div class="modal-box" onclick="event.stopPropagation()">
             <p class="modal-title">Nova igra?</p>
-            <p class="modal-body">Svi bodovi i runde bit će obrisani. Ova akcija se ne može poništiti.</p>
+            <p class="modal-body" id="reset-body">Svi bodovi i runde bit će obrisani. Ova akcija se ne može poništiti.</p>
             <div class="modal-actions">
                 <button class="btn btn-ghost-modal" onclick="cancelReset()">Odustani</button>
                 <button class="btn btn-danger" onclick="confirmReset()">Resetuj</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════ CLEAR HISTORY MODAL ═══════ -->
+    <div id="history-modal" class="modal-overlay hidden" onclick="cancelClearHistory()">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <p class="modal-title">Obrisati istoriju?</p>
+            <p class="modal-body">Sve odigrane igre i statistika bit će obrisani. Ova akcija se ne može poništiti.</p>
+            <div class="modal-actions">
+                <button class="btn btn-ghost-modal" onclick="cancelClearHistory()">Odustani</button>
+                <button class="btn btn-danger" onclick="confirmClearHistory()">Obriši</button>
             </div>
         </div>
     </div>

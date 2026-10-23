@@ -460,8 +460,11 @@ tbody tr.sum-row td.sum-winner {
   }
 
   .player-cards {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
+  }
+  .card-score-label {
+    display: none;
   }
   .player-card {
     padding: 0.8rem 0.75rem 0.7rem;
@@ -506,6 +509,30 @@ tbody tr.sum-row td.sum-winner {
 
 .add-round-bar .error-msg {
   margin-top: 0;
+}
+
+.add-round-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Live total of this round; turns green at 8 or 9. */
+.round-sum {
+  font-size: 13px;
+  font-weight: 600;
+  color: #8899aa;
+  font-variant-numeric: tabular-nums;
+  transition: color 0.15s;
+}
+.round-sum.ok {
+  color: #2e7d4f;
+}
+
+.reset-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+  text-decoration: none;
 }
 
 /* ── Modal ───────────────────────────────────── */
@@ -599,4 +626,190 @@ tbody tr.sum-row td.sum-winner {
 .btn-danger:hover {
   background: #7d2020;
   border-color: #7d2020;
+}
+
+/* ── Igra do ─────────────────────────────────── */
+.limit-field {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin: -0.5rem 0 1.75rem;
+}
+.limit-field .field-label {
+  margin-bottom: 0;
+}
+.limit-input {
+  width: 72px;
+  padding: 6px 4px;
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid #c8ccd8;
+  color: #1a1a2e;
+  outline: none;
+}
+.limit-input:focus {
+  border-bottom-color: #0f3460;
+}
+.limit-hint {
+  margin-bottom: 0;
+}
+.limit-label {
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 13px;
+  font-style: italic;
+  color: #8899aa;
+  font-weight: 400;
+}
+
+/* ── Game over ───────────────────────────────── */
+.game-over {
+  background: #1a1a2e;
+  color: #e8e4d8;
+  border-radius: 6px;
+  padding: 1.1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 18px;
+}
+.game-over.hidden {
+  display: none;
+}
+.game-over-title {
+  font-family: "Playfair Display", serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #f0a8a0;
+}
+.game-over-text {
+  flex: 1;
+  min-width: 200px;
+  font-size: 15px;
+}
+.game-over-text b {
+  color: #fff;
+}
+.game-over .btn-primary {
+  border-color: #e8e4d8;
+}
+
+.card-score-input:disabled,
+.btn-looser:disabled,
+.btn-add:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.btn-looser:disabled:hover {
+  border-color: #c8ccd8;
+  color: #8899aa;
+  background: transparent;
+}
+.btn-add:disabled:hover {
+  background: #1a1a2e;
+  border-color: #1a1a2e;
+}
+
+thead th.round-head {
+  text-align: left;
+  min-width: 70px;
+}
+
+/* ── Score cells: points, and the running total beneath ── */
+.cell-pts {
+  display: block;
+  line-height: 1.15;
+}
+.cell-run {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  font-weight: 400;
+  color: #8899aa;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+tbody td.looser-cell .cell-run {
+  color: #c0392b;
+}
+tbody td.over-cell .cell-run {
+  color: #a32d2d;
+  font-weight: 700;
+}
+tbody tr.sum-row td.sum-loser {
+  color: #f0a8a0;
+}
+
+/* ── History ─────────────────────────────────── */
+.history {
+  margin-top: 2.5rem;
+}
+.stats-table {
+  margin: 0.5rem 0 1.25rem;
+}
+.stats-table th:first-child,
+.stats-table td.stats-name {
+  text-align: left;
+}
+.stats-table td.stats-name {
+  font-weight: 600;
+}
+.history-list {
+  list-style: none;
+  margin-bottom: 1rem;
+}
+.history-item {
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd8cc;
+}
+.h-meta {
+  font-size: 12px;
+  color: #8899aa;
+  font-style: italic;
+}
+.h-scores {
+  font-size: 14px;
+  color: #1a1a2e;
+}
+.h-loser {
+  color: #a32d2d;
+  font-weight: 700;
+}
+.h-sep {
+  color: #c8ccd8;
+}
+
+@media (max-width: 600px) {
+  .cell-run {
+    font-size: 10px;
+  }
+  /* Four players fit a phone without sideways scrolling */
+  #score-table {
+    min-width: 0;
+  }
+  #score-table thead th {
+    padding: 8px 4px;
+    letter-spacing: 0.02em;
+    max-width: 72px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  #score-table thead th.round-head {
+    min-width: 0;
+    width: 2.5rem;
+  }
+  #score-table tbody td {
+    padding: 7px 4px;
+  }
+  .game-over {
+    padding: 0.9rem 1rem;
+  }
+  .game-over .btn {
+    width: 100%;
+  }
 }
