@@ -15,7 +15,7 @@
 
 [![Live Demo](https://img.shields.io/badge/♠_Live_Demo-sedmica-1A1A2E?style=for-the-badge)](https://pero-grubac.github.io/sedmica/)
 
-<img src="readme_assets/demo.gif" alt="Sedmica demo: three players and a game to 21, a round rejected because it does not add up to 8 or 9, a šuster round, running totals under every score, the game ending when Ana reaches 21, and the finished game in the history" width="820">
+<img src="readme_assets/demo.gif" alt="Sedmica demo: three players and a game to 15, a round refused because it does not add up to 8 or 9, a šuster round, the game ending when Alice reaches 15, and the table with running totals under every score" width="820">
 
 </div>
 
